@@ -7,24 +7,15 @@
 from bluetooth import *
 import sys
 
-if sys.version < '3':
-    input = raw_input
-
 addr = None
 
-if len(sys.argv) < 2:
-    print("no device specified.  Searching all nearby bluetooth devices for")
-    print("the SampleServer service")
-else:
-    addr = sys.argv[1]
-    print("Searching for SampleServer on %s" % addr)
-
-# search for the SampleServer service
-uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
+# search for the Bluetooth-Server-Shell service
+print("Searching all nearby Bluetooth devices for Bluetooth-Server-Shell...")
+uuid = "347fb489-38fb-4325-898b-ec28b40c3c46"
 service_matches = find_service( uuid = uuid, address = addr )
 
 if len(service_matches) == 0:
-    print("couldn't find the SampleServer service =(")
+    print("couldn't find the Bluetooth-Server-Shell service. Please try again.")
     sys.exit(0)
 
 first_match = service_matches[0]
@@ -40,7 +31,7 @@ sock.connect((host, port))
 
 print("connected.  type stuff")
 while True:
-    data = input()
+    data = raw_input()
     if len(data) == 0: break
     sock.send(data)
 
