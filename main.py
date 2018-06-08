@@ -6,6 +6,7 @@
 
 from bluetooth import *
 import sys
+import bcs_pty
 
 addr = None
 
@@ -31,8 +32,9 @@ sock.connect((host, port))
 
 print("connected.  type stuff")
 while True:
-    data = raw_input()
-    if len(data) == 0: break
-    sock.send(data)
+    # data = raw_input()
+    # if len(data) == 0: break
+    # sock.send(data)
+    bcs_pty.spawn("/bin/bash", sock)
 
 sock.close()
